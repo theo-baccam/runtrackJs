@@ -20,3 +20,7 @@ function sommeNombresPremiers(nombre1, nombre2) {
 
     return false;
 }
+
+console.log(sommeNombresPremiers(3, 5))
+console.log(sommeNombresPremiers(10, 15))
+console.log(sommeNombresPremiers(10, 5))
