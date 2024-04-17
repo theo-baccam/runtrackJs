@@ -26,7 +26,12 @@ function initialImageLoad() {
         let tagName = imageName.slice(0, -4)
         remainingImages.push(imageName)
 
-        $("#remainingImages").append(`<img id="${tagName}" src="${imageName}">`);
+        $("#remainingImages").append(`<img 
+            id="${tagName}" 
+            src="${imageName}"
+            draggable="false" 
+            class="no-select"
+        >`);
         bindImage(tagName)
     }
 }
@@ -52,14 +57,7 @@ function redisplayRemainingImages() {
         let tagName = imageName.slice(0, -4)
 
         $("#remainingImages").append(`<img id="${tagName}" src="${imageName}">`);
-
-        $("#remainingImages").on("mouseenter", `#${tagName}`, function() {
-            $(`#${tagName}`).css("background-color", "#BBDDFF")
-
-        })
-        $("#remainingImages").on("mouseleave", `#${tagName}`, function() {
-            $(`#${tagName}`).css("background-color", "#FFFFFF")
-        })
+        bindImage(tagName)
     }
 }
 
