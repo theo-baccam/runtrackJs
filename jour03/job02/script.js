@@ -39,8 +39,7 @@ function dragImage(tagName) {
 function bindImage(tagName) {
     $(`#${tagName}`).on("mousedown", function() {
         dragImage(tagName)
-    })
-    $("body").on("mouseup", function() {
+    }).on("mouseup", function() {
         $("body").off("mouseup")
         $("body").off("mousemove")
         redisplayRemainingImages()
