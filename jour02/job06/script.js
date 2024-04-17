@@ -16,13 +16,19 @@ let eventList = [];
 let done = false;
 
 
+function updateEventList(event) {
+    eventList.push(event["key"])
+    if (eventList.length > KONAMI_CODE.length) {
+        eventList.shift()
+    }
+}
+
 function userDidKonamiCode() {
-    let lastTen = eventList.slice(-10);
-    if (lastTen.length !== KONAMI_CODE.length) {
+    if (eventList.length !== KONAMI_CODE.length) {
         return false;
     }
-    for (let i = 0; i < lastTen.length; i++) {
-        if (KONAMI_CODE[i] !== lastTen[i]) {
+    for (let i = 0; i < eventList.length; i++) {
+        if (KONAMI_CODE[i] !== eventList[i]) {
             return false;
         }
     }
@@ -49,7 +55,7 @@ function createPage() {
 
 document.addEventListener("DOMContentLoaded", () => {
     addEventListener("keydown", (event) => {
-        eventList.push(event["key"])
+        updateEventList(event)
         if (userDidKonamiCode() && !done) {
             createPage();
             done = true;
