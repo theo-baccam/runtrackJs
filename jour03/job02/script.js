@@ -7,6 +7,8 @@ const CORRECT_RAINBOW_ORDER = [
     "arc6.png",
 ]
 
+let playField = ["", "", "", "", "", ""]
+
 let remainingImages = []
 
 
@@ -88,8 +90,22 @@ function bindShuffleButton() {
     })
 }
 
+function createPlayFieldSlots() {
+    for (let i = 0; i < playField.length; i++) {
+        $("#playField").append(`<div id="slot${i}"></div>`)
+        $(`#slot${i}`).css("height", "100%")
+        $(`#slot${i}`).css("width", "16.66%")
+        $(`#slot${i}`).on("mouseenter", function() {
+            $(`#slot${i}`).css("background-color", "#DDEEFF")
+        }).on("mouseleave", function() {
+            $(`#slot${i}`).css("background-color", "transparent")
+        })
+    }
+}
+
 
 $(document).ready(function() {
     initialImageLoad()
     bindShuffleButton()
+    createPlayFieldSlots()
 })

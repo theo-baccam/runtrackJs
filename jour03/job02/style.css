@@ -4,6 +4,8 @@
     outline-style: solid;
     outline-color: black;
     outline-width: 1px;
+    display: flex;
+    flex-direction: row;
 }
 
 .image {
