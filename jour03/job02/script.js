@@ -12,8 +12,13 @@ let playField = ["", "", "", "", "", ""]
 let remainingImages = []
 
 
+function getImageId(imageName) {
+    let idName = imageName.slice(0, -4);
+    return idName;
+}
+
 function createImage(imageName) {
-    let idName = imageName.slice(0, -4)
+    let idName = getImageId(imageName)
     $("#remainingImages").append(`<img 
         id="${idName}" 
         src="${imageName}"
@@ -22,7 +27,8 @@ function createImage(imageName) {
     >`);
 }
 
-function dragImage(idName) {
+function dragImage(imageName) {
+    let idName = getImageId(imageName)
     $(`#${idName}`).css("position", "absolute")
     $("body").on("mousemove", function(event) {
         let x = event["pageX"]
@@ -36,9 +42,11 @@ function dragImage(idName) {
     })
 }
 
-function bindImage(idName) {
+function bindImage(imageName, imageIndex) {
+    let idName = getImageId(imageName)
     $(`#${idName}`).on("mousedown", function() {
-        dragImage(idName)
+        console.log(imageIndex)
+        dragImage(imageName)
     }).on("mouseup", function() {
         $("body").off("mouseup")
         $("body").off("mousemove")
@@ -49,11 +57,10 @@ function bindImage(idName) {
 function initialImageLoad() {
     for (let i = 0; i < CORRECT_RAINBOW_ORDER.length; i++) {
         let imageName = CORRECT_RAINBOW_ORDER[i]
-        let idName = imageName.slice(0, -4)
         remainingImages.push(imageName)
 
-        createImage(imageName, idName)
-        bindImage(idName)
+        createImage(imageName)
+        bindImage(imageName, i)
     }
 }
 
@@ -75,10 +82,9 @@ function redisplayRemainingImages() {
 
     for (let i = 0; i < remainingImages.length; i++) {
         let imageName = remainingImages[i]
-        let idName = imageName.slice(0, -4)
 
         createImage(imageName)
-        bindImage(idName)
+        bindImage(imageName, i)
     }
 }
 
