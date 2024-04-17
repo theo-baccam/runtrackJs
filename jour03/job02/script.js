@@ -10,13 +10,38 @@ const CORRECT_RAINBOW_ORDER = [
 let remainingImages = []
 
 
-function bindImage(tagName) {
-    $("#remainingImages").on("mouseenter", `#${tagName}`, function() {
-        $(`#${tagName}`).css("background-color", "#BBDDFF")
+function createImage(imageName) {
+    let tagName = imageName.slice(0, -4)
+    $("#remainingImages").append(`<img 
+        id="${tagName}" 
+        src="${imageName}"
+        draggable="false" 
+        class="image"
+    >`);
+}
 
+function dragImage(tagName) {
+    $(`#${tagName}`).css("position", "absolute")
+    $("body").on("mousemove", function(event) {
+        let x = event["pageX"]
+        let y = event["pageY"]
+
+        let width = $(`#${tagName}`).width()
+        let height = $(`#${tagName}`).height()
+
+        $(`#${tagName}`).css("left", `${x - width / 2}px`)
+        $(`#${tagName}`).css("top", `${y - height / 2}px`)
     })
-    $("#remainingImages").on("mouseleave", `#${tagName}`, function() {
-        $(`#${tagName}`).css("background-color", "#FFFFFF")
+}
+
+function bindImage(tagName) {
+    $(`#${tagName}`).on("mousedown", function() {
+        dragImage(tagName)
+    })
+    $("body").on("mouseup", function() {
+        $("body").off("mouseup")
+        $("body").off("mousemove")
+        redisplayRemainingImages()
     })
 }
 
@@ -26,12 +51,7 @@ function initialImageLoad() {
         let tagName = imageName.slice(0, -4)
         remainingImages.push(imageName)
 
-        $("#remainingImages").append(`<img 
-            id="${tagName}" 
-            src="${imageName}"
-            draggable="false" 
-            class="no-select"
-        >`);
+        createImage(imageName, tagName)
         bindImage(tagName)
     }
 }
@@ -56,13 +76,13 @@ function redisplayRemainingImages() {
         let imageName = remainingImages[i]
         let tagName = imageName.slice(0, -4)
 
-        $("#remainingImages").append(`<img id="${tagName}" src="${imageName}">`);
+        createImage(imageName)
         bindImage(tagName)
     }
 }
 
 function bindShuffleButton() {
-    $("body").on("click", "#shuffleButton", function() {
+    $("#shuffleButton").on("click", function() {
         arrayShuffle(remainingImages)
         redisplayRemainingImages()
     })
