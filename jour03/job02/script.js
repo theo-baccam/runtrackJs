@@ -13,32 +13,32 @@ let remainingImages = []
 
 
 function createImage(imageName) {
-    let tagName = imageName.slice(0, -4)
+    let idName = imageName.slice(0, -4)
     $("#remainingImages").append(`<img 
-        id="${tagName}" 
+        id="${idName}" 
         src="${imageName}"
         draggable="false" 
         class="image"
     >`);
 }
 
-function dragImage(tagName) {
-    $(`#${tagName}`).css("position", "absolute")
+function dragImage(idName) {
+    $(`#${idName}`).css("position", "absolute")
     $("body").on("mousemove", function(event) {
         let x = event["pageX"]
         let y = event["pageY"]
 
-        let width = $(`#${tagName}`).width()
-        let height = $(`#${tagName}`).height()
+        let width = $(`#${idName}`).width()
+        let height = $(`#${idName}`).height()
 
-        $(`#${tagName}`).css("left", `${x - width / 2}px`)
-        $(`#${tagName}`).css("top", `${y - height / 2}px`)
+        $(`#${idName}`).css("left", `${x - width / 2}px`)
+        $(`#${idName}`).css("top", `${y - height / 2}px`)
     })
 }
 
-function bindImage(tagName) {
-    $(`#${tagName}`).on("mousedown", function() {
-        dragImage(tagName)
+function bindImage(idName) {
+    $(`#${idName}`).on("mousedown", function() {
+        dragImage(idName)
     }).on("mouseup", function() {
         $("body").off("mouseup")
         $("body").off("mousemove")
@@ -49,11 +49,11 @@ function bindImage(tagName) {
 function initialImageLoad() {
     for (let i = 0; i < CORRECT_RAINBOW_ORDER.length; i++) {
         let imageName = CORRECT_RAINBOW_ORDER[i]
-        let tagName = imageName.slice(0, -4)
+        let idName = imageName.slice(0, -4)
         remainingImages.push(imageName)
 
-        createImage(imageName, tagName)
-        bindImage(tagName)
+        createImage(imageName, idName)
+        bindImage(idName)
     }
 }
 
@@ -75,10 +75,10 @@ function redisplayRemainingImages() {
 
     for (let i = 0; i < remainingImages.length; i++) {
         let imageName = remainingImages[i]
-        let tagName = imageName.slice(0, -4)
+        let idName = imageName.slice(0, -4)
 
         createImage(imageName)
-        bindImage(tagName)
+        bindImage(idName)
     }
 }
 
