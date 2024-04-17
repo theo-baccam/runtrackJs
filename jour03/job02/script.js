@@ -9,21 +9,25 @@ const CORRECT_RAINBOW_ORDER = [
 
 let remainingImages = []
 
-function loadImages() {
+
+function bindImage(tagName) {
+    $("#remainingImages").on("mouseenter", `#${tagName}`, function() {
+        $(`#${tagName}`).css("background-color", "#BBDDFF")
+
+    })
+    $("#remainingImages").on("mouseleave", `#${tagName}`, function() {
+        $(`#${tagName}`).css("background-color", "#FFFFFF")
+    })
+}
+
+function initialImageLoad() {
     for (let i = 0; i < CORRECT_RAINBOW_ORDER.length; i++) {
         let imageName = CORRECT_RAINBOW_ORDER[i]
         let tagName = imageName.slice(0, -4)
         remainingImages.push(imageName)
 
         $("#remainingImages").append(`<img id="${tagName}" src="${imageName}">`);
-
-        $("#remainingImages").on("mouseenter", `#${tagName}`, function() {
-            $(`#${tagName}`).css("background-color", "#BBDDFF")
-
-        })
-        $("#remainingImages").on("mouseleave", `#${tagName}`, function() {
-            $(`#${tagName}`).css("background-color", "#FFFFFF")
-        })
+        bindImage(tagName)
     }
 }
 
@@ -68,6 +72,6 @@ function bindShuffleButton() {
 
 
 $(document).ready(function() {
-    loadImages()
+    initialImageLoad()
     bindShuffleButton()
 })
