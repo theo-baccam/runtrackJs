@@ -12,6 +12,42 @@ let playField = ["", "", "", "", "", ""]
 let remainingImages = []
 
 
+function createPlayFieldSlots() {
+    $("#playField").empty()
+    console.log(playField)
+    for (let i = 0; i < playField.length; i++) {
+        $("#playField").append(`<img 
+            id="slot${i}" 
+            src="${playField[i]}"
+        >`);
+        $(`#slot${i}`).css("height", "100%");
+        $(`#slot${i}`).css("width", "16.66%");
+    };
+}
+
+function getHoveredSlotId(cursorX, cursorY) {
+    for (let i = 0; i < playField.length; i++) {
+        let slot = $("#playField").children()[i];
+        let slotBoundingBox = slot.getBoundingClientRect();
+
+        if (
+            cursorX >= slotBoundingBox["left"] &&
+            cursorX <= slotBoundingBox["right"] &&
+            cursorY >= slotBoundingBox["top"] &&
+            cursorY <= slotBoundingBox["bottom"]
+        ) {
+            slotIndex = Number(slot["id"].slice(-1))
+            return slotIndex;
+        }
+    };
+    return null;
+}
+
+function addToPlayFieldRemoveFromRemaining(imageIndex, slotIndex) {
+    playField[slotIndex] = remainingImages[imageIndex]
+    remainingImages.splice(imageIndex, 1)
+}
+
 function getImageId(imageName) {
     let idName = imageName.slice(0, -4);
     return idName;
@@ -47,9 +83,14 @@ function bindImage(imageName, imageIndex) {
     $(`#${idName}`).on("mousedown", function() {
         console.log(imageIndex)
         dragImage(imageName)
-    }).on("mouseup", function() {
+    }).on("mouseup", function(event) {
         $("body").off("mouseup")
         $("body").off("mousemove")
+        let slotIndex = getHoveredSlotId(event["pageX"], event["pageY"])
+        if (slotIndex !== null) {
+            addToPlayFieldRemoveFromRemaining(imageIndex, slotIndex)
+            createPlayFieldSlots()
+        }
         redisplayRemainingImages()
     })
 }
@@ -93,19 +134,6 @@ function bindShuffleButton() {
         arrayShuffle(remainingImages)
         redisplayRemainingImages()
     })
-}
-
-function createPlayFieldSlots() {
-    for (let i = 0; i < playField.length; i++) {
-        $("#playField").append(`<div id="slot${i}"></div>`)
-        $(`#slot${i}`).css("height", "100%")
-        $(`#slot${i}`).css("width", "16.66%")
-        $(`#slot${i}`).on("mouseenter", function() {
-            $(`#slot${i}`).css("background-color", "#DDEEFF")
-        }).on("mouseleave", function() {
-            $(`#slot${i}`).css("background-color", "transparent")
-        })
-    }
 }
 
 
