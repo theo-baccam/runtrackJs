@@ -110,10 +110,7 @@ function displayWinMessage() {
 }
 
 function createGameMatrixHTML() {
-    $("body").empty();
-    $("body").append("<div id='gameMatrix'></div>");
-    $("#gameMatrix").css("width", "300px");
-    $("#gameMatrix").css("height", "300px");
+    $("#gameMatrix").empty();
 
     for (let y = 0; y < gameMatrix.length; y++) {
         let rowId = `gameMatrix${y}`;
@@ -147,9 +144,20 @@ function createGameMatrixHTML() {
     };
 }
 
+function newGame() {
+    gameMatrix = getShuffledMatrix()
+    createGameMatrixHTML()
+}
+
+function bindRestartButton() {
+    $("#restart").on("click", function() {
+        newGame()
+    });
+}
+
 
 
 $(document).ready(function() {
-    gameMatrix = getShuffledMatrix()
-    createGameMatrixHTML()
+    bindRestartButton()
+    newGame()
 });
