@@ -83,6 +83,14 @@ function checkMovable(tileY, tileX) {
     return false;
 }
 
+function swapTile(y1, x1, y2, x2) {
+    value1 = gameMatrix[y1][x1]
+    value2 = gameMatrix[y2][x2]
+
+    gameMatrix[y2][x2] = value1
+    gameMatrix[y1][x1] = value2
+}
+
 
 
 $(document).ready(function() {
