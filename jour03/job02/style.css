@@ -1,3 +1,7 @@
+body {
+    display: block;
+}
+
 #playField {
     height: 399px;
     width: 798px;
