@@ -2,9 +2,9 @@
 
 async function fetchWordsOfWisdom() {
     const response = await fetch("expression.txt");
-    const response_text = await response.text();
+    const responseText = await response.text();
 
-    quote = response_text.split("\n")
+    quote = responseText.split("\n")
 
     return quote
 }
