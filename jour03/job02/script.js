@@ -18,7 +18,9 @@ function createPlayFieldSlots() {
     for (let i = 0; i < playField.length; i++) {
         $("#playField").append(`<img 
             id="slot${i}" 
-            src="${playField[i]}"
+            src="${playField[i]}" 
+            draggable="false" 
+            class="image"
         >`);
         $(`#slot${i}`).css("height", "100%");
         $(`#slot${i}`).css("width", "16.66%");
