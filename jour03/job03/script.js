@@ -4,7 +4,7 @@ const CORRECT_MATRIX = [
     ["20.png", "21.png", ""],
 ];
 let gameMatrix = []
-
+let win = false;
 
 
 function getAllImages() {
@@ -91,12 +91,29 @@ function swapTile(y1, x1, y2, x2) {
     gameMatrix[y1][x1] = value2;
 }
 
+function checkWin() {
+    for (let y = 0; y < CORRECT_MATRIX.length; y++) {
+        for (let x = 0; x < CORRECT_MATRIX.length; x++) {
+            if (CORRECT_MATRIX[y][x] !== gameMatrix[y][x]) {
+                return false;
+            };
+        };
+    };
+
+    return true;
+}
+
+
+function displayWinMessage() {
+    $("body").append("<p id='winMessage'>Vous avez gagné</p>")
+    $("#winMessage").css("color", "green")
+}
 
 function createGameMatrixHTML() {
     $("body").empty();
     $("body").append("<div id='gameMatrix'></div>");
-    $("#gameMatrix").css("width", "400px");
-    $("#gameMatrix").css("height", "400px");
+    $("#gameMatrix").css("width", "300px");
+    $("#gameMatrix").css("height", "300px");
 
     for (let y = 0; y < gameMatrix.length; y++) {
         let rowId = `gameMatrix${y}`;
@@ -116,11 +133,15 @@ function createGameMatrixHTML() {
             $(`#${tileId}`).css("object-fit", "cover");
             $(`#${tileId}`).on("click", function() {
                 let emptyTile = checkMovable(y, x);
-                if (emptyTile === false) {
+                if (emptyTile === false || win) {
                     return;
                 };
                 swapTile(y, x, emptyTile[0], emptyTile[1]);
                 createGameMatrixHTML();
+                win = checkWin();
+                if (win) {
+                    displayWinMessage()
+                }
             });
         };
     };
