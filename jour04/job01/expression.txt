@@ -1,0 +1,3 @@
+"You copied that function without understanding why it does what it does, and as a result your code IS GARBAGE.
+AGAIN."
+- Linus Torvalds
