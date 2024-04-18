@@ -1,7 +1,7 @@
 const CORRECT_MATRIX = [
-    ["logo1.PNG", "logo2.PNG", "logo3.PNG"],
-    ["logo4.PNG", "logo5.PNG", "logo6.PNG"],
-    ["logo7.PNG", "logo8.PNG", ""],
+    ["logo1.PNG", "logo4.PNG", "logo7.PNG"],
+    ["logo2.PNG", "logo5.PNG", "logo8.PNG"],
+    ["logo3.PNG", "logo6.PNG", ""],
 ];
 let gameMatrix = []
 
@@ -75,7 +75,7 @@ function checkMovable(tileY, tileX) {
         let neighborTileX = neighborTile[1];
 
         if (gameMatrix[neighborTileY][neighborTileX] === "") {
-            emptyPosition = neighborTile;
+            let emptyPosition = neighborTile;
             return emptyPosition;
         };
     };
@@ -84,16 +84,51 @@ function checkMovable(tileY, tileX) {
 }
 
 function swapTile(y1, x1, y2, x2) {
-    value1 = gameMatrix[y1][x1]
-    value2 = gameMatrix[y2][x2]
+    let value1 = gameMatrix[y1][x1];
+    let value2 = gameMatrix[y2][x2];
 
-    gameMatrix[y2][x2] = value1
-    gameMatrix[y1][x1] = value2
+    gameMatrix[y2][x2] = value1;
+    gameMatrix[y1][x1] = value2;
+}
+
+
+function createGameMatrixHTML() {
+    $("body").empty();
+    $("body").append("<div id='gameMatrix'></div>");
+    $("#gameMatrix").css("width", "400px");
+    $("#gameMatrix").css("height", "400px");
+
+    for (let y = 0; y < gameMatrix.length; y++) {
+        let rowId = `gameMatrix${y}`;
+        $("#gameMatrix").append(`<div id="${rowId}"></div>`);
+        $(`#${rowId}`).css("width", "100%");
+        $(`#${rowId}`).css("height", "33%");
+
+        for (let x = 0; x < gameMatrix[y].length; x++) {
+            let tileImageFileName = gameMatrix[y][x];
+            let tileId = `${rowId}${x}`;
+            $(`#${rowId}`).append(`<img 
+                id="${tileId}" 
+                src="${tileImageFileName}"
+            ></img>`);
+            $(`#${tileId}`).css("width", "33%");
+            $(`#${tileId}`).css("height", "100%");
+            $(`#${tileId}`).css("object-fit", "fill");
+            $(`#${tileId}`).on("click", function() {
+                let emptyTile = checkMovable(y, x);
+                if (emptyTile === false) {
+                    return;
+                };
+                swapTile(y, x, emptyTile[0], emptyTile[1]);
+                createGameMatrixHTML();
+            });
+        };
+    };
 }
 
 
 
 $(document).ready(function() {
-    gameMatrix = getShuffledMatrix()
-    console.log(gameMatrix)
+    gameMatrix = CORRECT_MATRIX 
+    createGameMatrixHTML()
 });
