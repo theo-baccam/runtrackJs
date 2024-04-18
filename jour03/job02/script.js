@@ -5,16 +5,16 @@ const CORRECT_RAINBOW_ORDER = [
     "arc4.png",
     "arc5.png",
     "arc6.png",
-]
-let playField = ["", "", "", "", "", ""]
-let remainingImages = []
+];
+let playField = ["", "", "", "", "", ""];
+let remainingImages = [];
 
 
 
 function createPlayFieldSlots() {
-    $("#playField").empty()
+    $("#playField").empty();
     for (let i = 0; i < playField.length; i++) {
-        slotImageName = playField[i]
+        slotImageName = playField[i];
         $("#playField").append(`<img 
             id="slot${i}" 
             src="${slotImageName}" 
@@ -39,23 +39,23 @@ function getHoveredSlotId(cursorX, cursorY) {
         ) {
             slotIndex = Number(slot["id"].slice(-1))
             return slotIndex;
-        }
+        };
     };
     return null;
 }
 
 
 function moveToOtherArray(sourceArray, sourceIndex, targetArray, targetIndex) {
-    targetArray[targetIndex] = sourceArray[sourceIndex]
-    sourceArray.splice(sourceIndex, 1)
+    targetArray[targetIndex] = sourceArray[sourceIndex];
+    sourceArray.splice(sourceIndex, 1);
 }
 
 function swapValues(array1, index1, array2, index2) {
-    value1 = array1[index1]
-    value2 = array2[index2]
+    value1 = array1[index1];
+    value2 = array2[index2];
 
-    array2[index2] = value1
-    array1[index1] = value2
+    array2[index2] = value1;
+    array1[index1] = value2;
 }
 
 function performBetweenBothArrays(imageIndex, slotIndex) {
@@ -66,7 +66,7 @@ function performBetweenBothArrays(imageIndex, slotIndex) {
         case false:
             swapValues(remainingImages, imageIndex, playField, slotIndex);
             return;
-    }
+    };
 }
 
 
@@ -76,7 +76,7 @@ function getImageId(imageName) {
 }
 
 function createImage(imageName) {
-    let idName = getImageId(imageName)
+    let idName = getImageId(imageName);
     $("#remainingImages").append(`<img 
         id="${idName}" 
         src="${imageName}"
@@ -86,18 +86,18 @@ function createImage(imageName) {
 }
 
 function dragImage(imageName) {
-    let idName = getImageId(imageName)
-    $(`#${idName}`).css("position", "absolute")
+    let idName = getImageId(imageName);
+    $(`#${idName}`).css("position", "absolute");
     $("body").on("mousemove", function(event) {
-        let x = event["pageX"]
-        let y = event["pageY"]
+        let x = event["pageX"];
+        let y = event["pageY"];
 
-        let width = $(`#${idName}`).width()
-        let height = $(`#${idName}`).height()
+        let width = $(`#${idName}`).width();
+        let height = $(`#${idName}`).height();
 
-        $(`#${idName}`).css("left", `${x - width / 2}px`)
-        $(`#${idName}`).css("top", `${y - height / 2}px`)
-    })
+        $(`#${idName}`).css("left", `${x - width / 2}px`);
+        $(`#${idName}`).css("top", `${y - height / 2}px`);
+    });
 }
 
 function isGameWon() {
@@ -112,60 +112,60 @@ function isGameWon() {
 }
 
 function displayWinMessage() {
-    $("body").append("<p id='winMessage'>Vous avez gagné<p>")
-    $("#winMessage").css("color", "green")
+    $("body").append("<p id='winMessage'>Vous avez gagné<p>");
+    $("#winMessage").css("color", "green");
 }
 
 function displayLoseMessage() {
-    $("body").append("<p id='loseMessage'>Vous avez perdu<p>")
-    $("#loseMessage").css("color", "red")
+    $("body").append("<p id='loseMessage'>Vous avez perdu<p>");
+    $("#loseMessage").css("color", "red");
 }
 
 function bindImage(imageName, imageIndex) {
-    let idName = getImageId(imageName)
+    let idName = getImageId(imageName);
     $(`#${idName}`).on("mousedown", function() {
-        dragImage(imageName)
+        dragImage(imageName);
     }).on("mouseup", function(event) {
-        $("body").off("mouseup")
-        $("body").off("mousemove")
-        let slotIndex = getHoveredSlotId(event["pageX"], event["pageY"])
+        $("body").off("mouseup");
+        $("body").off("mousemove");
+        let slotIndex = getHoveredSlotId(event["pageX"], event["pageY"]);
         if (slotIndex !== null) {
-            performBetweenBothArrays(imageIndex, slotIndex)
-            createPlayFieldSlots()
-        }
-        redisplayRemainingImages()
+            performBetweenBothArrays(imageIndex, slotIndex);
+            createPlayFieldSlots();
+        };
+        redisplayRemainingImages();
 
         if (remainingImages.length > 0) {
             return;
-        }
+        };
 
         if (isGameWon()) {
-            displayWinMessage()
+            displayWinMessage();
         } else {
-            displayLoseMessage()
-        }
+            displayLoseMessage();
+        };
     })
 }
 
 function initialImageLoad() {
     for (let i = 0; i < CORRECT_RAINBOW_ORDER.length; i++) {
-        let imageName = CORRECT_RAINBOW_ORDER[i]
-        remainingImages.push(imageName)
+        let imageName = CORRECT_RAINBOW_ORDER[i];
+        remainingImages.push(imageName);
 
-        createImage(imageName)
-        bindImage(imageName, i)
+        createImage(imageName);
+        bindImage(imageName, i);
     }
 }
 
 function redisplayRemainingImages() {
-    $("#remainingImages").empty()
+    $("#remainingImages").empty();
 
     for (let i = 0; i < remainingImages.length; i++) {
-        let imageName = remainingImages[i]
+        let imageName = remainingImages[i];
 
-        createImage(imageName)
-        bindImage(imageName, i)
-    }
+        createImage(imageName);
+        bindImage(imageName, i);
+    };
 }
 
 
@@ -184,15 +184,15 @@ function arrayShuffle(array) {
 
 function bindShuffleButton() {
     $("#shuffleButton").on("click", function() {
-        arrayShuffle(remainingImages)
-        redisplayRemainingImages()
+        arrayShuffle(remainingImages);
+        redisplayRemainingImages();
     })
 }
 
 
 
 $(document).ready(function() {
-    initialImageLoad()
-    bindShuffleButton()
-    createPlayFieldSlots()
-})
+    initialImageLoad();
+    bindShuffleButton();
+    createPlayFieldSlots();
+});
