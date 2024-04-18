@@ -45,9 +45,13 @@ function getHoveredSlotId(cursorX, cursorY) {
     return null;
 }
 
-function addToPlayFieldRemoveFromRemaining(imageIndex, slotIndex) {
-    playField[slotIndex] = remainingImages[imageIndex]
-    remainingImages.splice(imageIndex, 1)
+function moveToOtherArray(sourceIndex, targetIndex) {
+    playField[targetIndex] = remainingImages[sourceIndex]
+    remainingImages.splice(sourceIndex, 1)
+}
+
+function performAppropriateOperation(imageIndex, slotIndex) {
+    return;
 }
 
 function getImageId(imageName) {
@@ -90,7 +94,7 @@ function bindImage(imageName, imageIndex) {
         $("body").off("mousemove")
         let slotIndex = getHoveredSlotId(event["pageX"], event["pageY"])
         if (slotIndex !== null) {
-            addToPlayFieldRemoveFromRemaining(imageIndex, slotIndex)
+            moveToOtherArray(imageIndex, slotIndex)
             createPlayFieldSlots()
         }
         redisplayRemainingImages()
