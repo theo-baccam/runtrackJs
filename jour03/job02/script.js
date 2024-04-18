@@ -50,6 +50,25 @@ function moveToOtherArray(sourceArray, sourceIndex, targetArray, targetIndex) {
     sourceArray.splice(sourceIndex, 1)
 }
 
+function swapValues(array1, index1, array2, index2) {
+    value1 = array1[index1]
+    value2 = array2[index2]
+
+    array2[index2] = value1
+    array1[index1] = value2
+}
+
+function performBetweenBothArrays(imageIndex, slotIndex) {
+    switch (playField[slotIndex] === "") {
+        case true:
+            moveToOtherArray(remainingImages, imageIndex, playField, slotIndex);
+            return;
+        case false:
+            swapValues(remainingImages, imageIndex, playField, slotIndex);
+            return;
+    }
+}
+
 function getImageId(imageName) {
     let idName = imageName.slice(0, -4);
     return idName;
@@ -90,7 +109,7 @@ function bindImage(imageName, imageIndex) {
         $("body").off("mousemove")
         let slotIndex = getHoveredSlotId(event["pageX"], event["pageY"])
         if (slotIndex !== null) {
-            moveToOtherArray(remainingImages, imageIndex, playField, slotIndex)
+            performBetweenBothArrays(imageIndex, slotIndex)
             createPlayFieldSlots()
         }
         redisplayRemainingImages()
