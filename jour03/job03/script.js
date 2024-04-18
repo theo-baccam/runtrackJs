@@ -1,7 +1,7 @@
 const CORRECT_MATRIX = [
-    ["logo1.PNG", "logo4.PNG", "logo7.PNG"],
-    ["logo2.PNG", "logo5.PNG", "logo8.PNG"],
-    ["logo3.PNG", "logo6.PNG", ""],
+    ["00.png", "01.png", "02.png"],
+    ["10.png", "11.png", "12.png"],
+    ["20.png", "21.png", ""],
 ];
 let gameMatrix = []
 
@@ -113,7 +113,7 @@ function createGameMatrixHTML() {
             ></img>`);
             $(`#${tileId}`).css("width", "33%");
             $(`#${tileId}`).css("height", "100%");
-            $(`#${tileId}`).css("object-fit", "fill");
+            $(`#${tileId}`).css("object-fit", "cover");
             $(`#${tileId}`).on("click", function() {
                 let emptyTile = checkMovable(y, x);
                 if (emptyTile === false) {
@@ -129,6 +129,6 @@ function createGameMatrixHTML() {
 
 
 $(document).ready(function() {
-    gameMatrix = CORRECT_MATRIX 
+    gameMatrix = getShuffledMatrix()
     createGameMatrixHTML()
 });
