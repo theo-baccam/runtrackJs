@@ -145,6 +145,8 @@ function createGameMatrixHTML() {
 }
 
 function newGame() {
+    win = false;
+    $("#winMessage").remove()
     gameMatrix = getShuffledMatrix()
     createGameMatrixHTML()
 }
