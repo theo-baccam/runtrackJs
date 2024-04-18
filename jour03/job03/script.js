@@ -3,6 +3,8 @@ const CORRECT_MATRIX = [
     ["logo4.PNG", "logo5.PNG", "logo6.PNG"],
     ["logo7.PNG", "logo8.PNG", ""],
 ];
+let gameMatrix = []
+
 
 
 function getAllImages() {
@@ -40,7 +42,50 @@ function getShuffledMatrix() {
     return shuffledMatrix;
 }
 
+function checkMovable(tileY, tileX) {
+    currentTile = gameMatrix[tileY][tileX]
+
+    let up = null;
+    let down = null;
+    let left = null;
+    let right = null;
+
+    let neightborTiles = []
+
+    if (tileY !== 0) {
+        up = [tileY - 1, tileX];
+        neightborTiles.push(up);
+    };
+    if (tileY !== 2) {
+        down = [tileY + 1, tileX];
+        neightborTiles.push(down);
+    };
+    if (tileX !== 0) {
+        left = [tileY, tileX - 1];
+        neightborTiles.push(left);
+    };
+    if (tileX !== 2) {
+        right = [tileY, tileX + 1];
+        neightborTiles.push(right);
+    };
+
+    for (let i = 0; i < neightborTiles.length; i++) {
+        let neighborTile = neightborTiles[i];
+        let neighborTileY = neighborTile[0];
+        let neighborTileX = neighborTile[1];
+
+        if (gameMatrix[neighborTileY][neighborTileX] === "") {
+            emptyPosition = neighborTile;
+            return emptyPosition;
+        };
+    };
+
+    return false;
+}
+
+
 
 $(document).ready(function() {
-    console.log(getShuffledMatrix())
+    gameMatrix = getShuffledMatrix()
+    console.log(gameMatrix)
 });
