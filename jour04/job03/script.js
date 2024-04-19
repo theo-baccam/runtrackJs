@@ -16,13 +16,54 @@ async function fetchPokemonJSON() {
     };
 }
 
-function inArray(array, item) {
-    for (let i = 0; i < array.length; i++) {
-        if (array[i] === item) {
+function filterById(pokemonArray) {
+    const filteredById = (
+        pokemonArray.filter(pokemon => pokemon.id === currentId)
+    );
+    return filteredById;
+}
+
+function objectIncludesValue(object, value) {
+    for (const key in object) {
+        if (object[key] === value) {
             return true;
-        }
-    }
+        };
+    };
+
     return false;
+}
+
+function filterByName(pokemonArray) {
+    const filteredByName = (
+        pokemonArray.filter(
+            pokemon => objectIncludesValue(pokemon.name, currentName)
+        )
+    );
+    return filteredByName;
+}
+
+function filterByType(pokemonArray) {
+    const filteredByType = (
+        pokemonArray.filter(pokemon => pokemon.type.includes(selectedType))
+    );
+    return filteredByType;
+}
+
+async function getFilteredPokemon() {
+    const pokemonArray = await fetchPokemonJSON();
+    let filteredPokemon = pokemonArray;
+
+    if (currentId !== 0) {
+        filteredPokemon = filterById(filteredPokemon);
+    };
+    if (currentName !== "") {
+        filteredPokemon = filterByName(filteredPokemon);
+    };
+    if (selectedType !== "...") {
+        filteredPokemon = filterByType(filteredPokemon);
+    };
+
+    return filteredPokemon;
 }
 
 async function getAllTypes() {
@@ -33,9 +74,11 @@ async function getAllTypes() {
         const typesOnly = json.map(item => item.type);
 
         for (let i = 0; i < typesOnly.length; i++) {
-            for (let j = 0; j < typesOnly[i].length; j++) {
-                if (!inArray(allTypes, typesOnly[i][j])) {
-                    allTypes.push(typesOnly[i][j]);
+            let typesArray = typesOnly[i]
+            for (let j = 0; j < typesArray.length; j++) {
+                let type = typesArray[j]
+                if (!allTypes.includes(type)) {
+                    allTypes.push(type);
                 };
             };
         }
