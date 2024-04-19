@@ -116,14 +116,50 @@ function insertTypesIntoSelect(typeArray) {
     };
 }
 
+async function loadTable() {
+    $("#pokemonTable").empty()
+    const results = await getFilteredPokemon()
+
+    $("#pokemonTable").append(`
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Base Stats</th>
+        </tr>
+    `)
+
+    for (let i = 0; i < results.length; i++) {
+        let pokemon = results[i]
+        $("#pokemonTable").append(`
+            <tr>
+                <td>${pokemon.id}</td>
+                <td>${pokemon.name.english}</td>
+                <td>${pokemon.type.toString()}</td>
+                <td>${pokemon.base.HP}</td>
+            </tr>
+        `)
+    }
+}
+
+function bindFilterButton() {
+    $("#filterButton").on("click", function() {
+        loadTable()
+    });
+}
+
+
 async function loadPage() {
     insertTypesIntoSelect(await getAllTypes())
     bindIdInput()
     bindNameInput()
+    bindFilterButton()
 
     currentId = Number($("#idInput").val());
     currentName = $("#nameInput").val();
     selectedType = $("#typeSelect").val();
+
+    loadTable()
 }
 
 
