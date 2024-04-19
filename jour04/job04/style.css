@@ -1,0 +1,13 @@
+form {
+    display: block;
+}
+
+form * {
+    margin: 1em;
+}
+
+table, table th, table td{
+    outline-style: solid;
+    outline-width: 1px;
+    padding: 0.5em;
+}

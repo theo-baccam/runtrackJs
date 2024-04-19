@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "last_name": "BACCAM",
+        "first_name": "Théo",
+        "email": "theo.baccam@laplateforme.io"
+    },
+    {
+        "id": 2,
+        "last_name": "BUZURTANOV",
+        "first_name": "Rachid",
+        "email": "rachid.buzurtanov@laplateforme.io"
+    },
+    {
+        "id": 3,
+        "last_name": "MIMOUNI",
+        "first_name": "Helwan-Djibril",
+        "email": "helwan-djibril.mimouni@laplateforme.io"
+    }
+]
