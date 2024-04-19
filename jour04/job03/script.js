@@ -1,4 +1,7 @@
-let selectedType = ""
+// Défini par défaut dans loadPage
+let currentId; // int
+let currentName; // string
+let selectedType; // string
 
 
 async function fetchPokemonJSON() {
@@ -24,7 +27,7 @@ function inArray(array, item) {
 
 async function getAllTypes() {
     try {
-        allTypes = [];
+        allTypes = ["..."];
 
         const json = await fetchPokemonJSON();
         const typesOnly = json.map(item => item.type);
@@ -46,20 +49,38 @@ async function getAllTypes() {
 }
 
 
+function bindIdInput() {
+    $("#idInput").on("input", function() {
+        currentId = Number($("#idInput").val());
+    });
+}
+
+function bindNameInput() {
+    $("#nameInput").on("input", function() {
+        currentName = $("#nameInput").val();
+    });
+}
+
 function insertTypesIntoSelect(typeArray) {
     for (let i = 0; i < typeArray.length; i++) {
         $("#typeSelect").append(`<option 
             value="${typeArray[i]}">
             ${typeArray[i]}
-        </option>`)
+        </option>`);
         $("#typeSelect").on("change", function() {
-            selectedType = $("#typeSelect").val()
-        })
-    }
+            selectedType = $("#typeSelect").val();
+        });
+    };
 }
 
 async function loadPage() {
     insertTypesIntoSelect(await getAllTypes())
+    bindIdInput()
+    bindNameInput()
+
+    currentId = Number($("#idInput").val());
+    currentName = $("#nameInput").val();
+    selectedType = $("#typeSelect").val();
 }
 
 
