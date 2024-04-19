@@ -5,3 +5,9 @@ form {
 form * {
     margin: 1em;
 }
+
+#pokemonTable, #pokemonTable th, #pokemonTable td{
+    outline-style: solid;
+    outline-width: 1px;
+    padding: 0.5em;
+}

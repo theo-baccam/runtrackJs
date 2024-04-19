@@ -116,6 +116,15 @@ function insertTypesIntoSelect(typeArray) {
     };
 }
 
+function getNameList(nameObject) {
+    let nameList = [];
+    for (const key in nameObject) {
+        nameList.push(nameObject[key])
+    }
+
+    return nameList
+}
+
 async function loadTable() {
     $("#pokemonTable").empty()
     const results = await getFilteredPokemon()
@@ -125,7 +134,6 @@ async function loadTable() {
             <th>Id</th>
             <th>Name</th>
             <th>Type</th>
-            <th>Base Stats</th>
         </tr>
     `)
 
@@ -134,9 +142,8 @@ async function loadTable() {
         $("#pokemonTable").append(`
             <tr>
                 <td>${pokemon.id}</td>
-                <td>${pokemon.name.english}</td>
+                <td>${getNameList(pokemon.name).toString()}</td>
                 <td>${pokemon.type.toString()}</td>
-                <td>${pokemon.base.HP}</td>
             </tr>
         `)
     }
