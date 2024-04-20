@@ -1,3 +1,13 @@
+const ALL_SIGN_UP_INPUTS = [
+    "#signUpLastNameInput",
+    "#signUpFirstNameInput",
+    "#signUpEmailInput",
+    "#signUpPasswordInput",
+    "#signUpAddressInput",
+    "#signUpPostalCodeInput"
+];
+
+
 function isInputFilled(input) {
     return input.val() !== "";
 }
@@ -8,17 +18,8 @@ function isInputRequiredLength(input, requiredLength) {
 
 
 function allSignUpInputsFilled() {
-    const allSignUpInputs = [
-        $("#signUpLastNameInput"),
-        $("#signUpFirstNameINput"),
-        $("#signUpEmailInput"),
-        $("#signUpPasswordInput"),
-        $("#signUpAddressInput"),
-        $("#signUpPostalCodeInput")
-    ];
-
-    for (let i = 0; i < allSignUpInputs.length; i++) {
-        if (!isInputFilled(allSignUpInputs[i])) {
+    for (let i = 0; i < ALL_SIGN_UP_INPUTS.length; i++) {
+        if (!isInputFilled($(ALL_SIGN_UP_INPUTS[i]))) {
             return `<span class="message">
                 Veuillez remplir tous les champs
             </span>`;
@@ -125,21 +126,21 @@ async function displayMessages() {
     $(".message").remove();
 
     const allStatus = await allSignUpInputsFilled();
-    const lastNameStatus = await verifyLastName();
-    const firstNameStatus = await verifyFirstName();
-    const emailStatus = await verifyEmail();
-    const passwordStatus = await verifyPassword();
-    const addressStatus = await verifyAddress();
-    const postalCodeStatus = await verifyPostalCode();
+    const ALL_INPUT_STATUS = [
+        await verifyLastName(),
+        await verifyFirstName(),
+        await verifyEmail(),
+        await verifyPassword(),
+        await verifyAddress(),
+        await verifyPostalCode()
+    ];
 
     $("form").prepend(allStatus);
-    $("#signUpLastNameInput").after(lastNameStatus);
-    $("#signUpFirstNameInput").after(firstNameStatus);
-    $("#signUpEmailInput").after(emailStatus);
-    $("#signUpPasswordInput").after(passwordStatus);
-    $("#signUpAddressInput").after(addressStatus);
-    $("#signUpPostalCodeInput").after(postalCodeStatus);
+    for (let i = 0; i < ALL_SIGN_UP_INPUTS.length; i++) {
+        $(ALL_SIGN_UP_INPUTS[i]).after(ALL_INPUT_STATUS[i])
+    };
 }
+
 
 $(document).ready(function() {
     displayMessages();
