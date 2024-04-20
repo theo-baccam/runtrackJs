@@ -63,35 +63,48 @@ function verifyEmail() {
 }
 
 function verifyPassword() {
-    const LOWERCASE = /[a-z]/;
-    const UPPERCASE = /[A-Z]/;
-    const DIGITS = /[0-9]/;
+    const password = $("#signUpPasswordInput");
+
     const SPECIAL_CHARACTERS = (
         /[!@#\$%\^&\*\(\)_\+\-=\[\]{};':"\\|,\.\/<>?]/
     );
+    const PASSWORD_CONDITIONS = [
+        {
+            condition: (!isInputRequiredLength(password, 8)),
+            message: `
+                Le mot de passe doit faire au moins 8 caractères
+            `
+        },
+        {
+            condition: (password.val().search(/[a-z]/) === -1),
+            message: `
+                Le mot de passe doit inclure au moins une lettre minuscule
+            `
+        },
+        {
+            condition: (password.val().search(/[A-Z]/) === -1),
+            message: `
+                Le mot de passe doit inclure au moins une lettre majuscule
+            `
+        },
+        {
+            condition: (password.val().search(/[0-9]/) === -1),
+            message: `Le mot de passe doit inclure au moins un chiffre`
+        },
+        {
+            condition: (password.val().search([SPECIAL_CHARACTERS]) === -1),
+            message: `
+                Le mot de passe doit inclure au moins un caractère spécial ASCII
+            `
+        },
+    ]
 
-    const password = $("#signUpPasswordInput");
-
-    if (!isInputRequiredLength(password, 8)) {
-        return `<span class="message">
-            Le mot de passe doit faire au moins 8 caractères
-        </span>`;
-    } else if (password.val().search(LOWERCASE) === -1) {
-        return `<span class="message">
-            Le mot de passe doit inclure au moins une lettre miniscule
-        </span>`;
-    } else if (password.val().search(UPPERCASE) === -1) {
-        return `<span class="message">
-            Le mot de passe doit inclure au moins une lettre majuscule
-        </span>`;
-    } else if (password.val().search(DIGITS) === -1) {
-        return `<span class="message">
-            Le mot de passe doit inclure au moins un chiffre
-        </span>`;
-    } else if (password.val().search(SPECIAL_CHARACTERS) === -1) {
-        return `<span class="message">
-            Le mot de passe doit inclure au moins 1 caractère spécial ASCII 
-        </span>`;
+    for (let i = 0; i < PASSWORD_CONDITIONS.length; i++) {
+        if (PASSWORD_CONDITIONS[i].condition) {
+            return `<span class="message">
+                ${PASSWORD_CONDITIONS[i].message}
+            </span>`;
+        };
     };
 
     return "";
