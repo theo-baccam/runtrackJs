@@ -60,11 +60,13 @@ main {
 main form {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
 
     width: 24em;
     padding: 1em;
     border-radius: 1em;
+    height: 32em;
 
     background-color: #44475A;
 }
@@ -74,9 +76,6 @@ main form div {
     flex-direction: column;
 
     align-items: center;
-
-    margin-top: 1em;
-    margin-bottom: 1em;
 }
 
 main form div input {
@@ -86,4 +85,9 @@ main form div input {
 main form div .email,
 main form div .address{
     width: 20em;
+}
+
+.message {
+    color: #FF5555;
+    font-size: smaller;
 }
