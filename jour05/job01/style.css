@@ -58,16 +58,32 @@ main {
 }
 
 main form {
-    background-color: #44475A;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
+    width: 24em;
     padding: 1em;
     border-radius: 1em;
+
+    background-color: #44475A;
 }
 
 main form div {
     display: flex;
     flex-direction: column;
 
+    align-items: center;
+
     margin-top: 1em;
     margin-bottom: 1em;
+}
+
+main form div input {
+    width: 12em
+}
+
+main form div .email,
+main form div .address{
+    width: 20em;
 }
