@@ -10,16 +10,24 @@
     </head>
     <body>
         <header>
-            <div id="title">J-05</div>
-            <div>
-                <button id="signUpButton">Inscription</button>
-                <button id="logInButton">Connexion</button>
+            <div id="title"><b>J-05</b></div>
+            <div id="buttons">
+                <button 
+                    onclick="window.location.href='inscription.html'"
+                >
+                    Inscription
+                </button>
+                <button 
+                    onclick="window.location.href='connexion.html'"
+                >
+                    Connexion
+                </button>
             </div>
         </header>
 
-        <main id="formSection">
-            <form id="logInForm">
-                <div id="logInEmail">
+        <main>
+            <form>
+                <div>
                     <label for="logInEmailInput">E-mail</label>
                     <input
                         type="text"
@@ -27,13 +35,16 @@
                         name="logInEmailInput"
                     >
                 </div>
-                <div id="logInPassword">
+                <div>
                     <label for="logInPassword">Mot de passe</label>
                     <input
                         type="password"
                         id="logInPasswordInput"
                         name="logInPasswordInput"
                     >
+                </div>
+                <div>
+                    <button>Se connecter</button>
                 </div>
             </form>
         </main>
