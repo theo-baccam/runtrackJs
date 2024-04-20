@@ -110,7 +110,7 @@ function verifyPassword() {
     return "";
 }
 
-async function verifyAddress() {
+function verifyAddress() {
     const address = $("#signUpAddressInput");
 
     if (!isInputRequiredLength(address, 6)) {
@@ -122,7 +122,7 @@ async function verifyAddress() {
     return "";
 }
 
-async function verifyPostalCode() {
+function verifyPostalCode() {
     const postalCode = $("#signUpPostalCodeInput");
 
     if (!isInputRequiredLength(postalCode, 2)) {
