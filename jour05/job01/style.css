@@ -60,13 +60,13 @@ main {
 main form {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 
     width: 24em;
     padding: 1em;
     border-radius: 1em;
-    height: 32em;
+    height: fit-content;
 
     background-color: #44475A;
 }

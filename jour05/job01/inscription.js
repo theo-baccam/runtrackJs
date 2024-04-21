@@ -92,7 +92,7 @@ function verifyPassword() {
             message: `Le mot de passe doit inclure au moins un chiffre`
         },
         {
-            condition: (password.val().search([SPECIAL_CHARACTERS]) === -1),
+            condition: (password.val().search(SPECIAL_CHARACTERS) === -1),
             message: `
                 Le mot de passe doit inclure au moins un caractère spécial ASCII
             `
